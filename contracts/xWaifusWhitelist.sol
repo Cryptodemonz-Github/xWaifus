@@ -20,15 +20,15 @@ import "./mocks/xLLTH.sol";
 import "./xWaifusERC721A.sol";
 
 abstract contract xWaifusWhitelist is xWaifusERC721A {
-    uint256 SPAWN_WHITELIST_SUPPLY = 500;
-    uint256 COLLAB_WHITELIST_SUPPLY = 1000;
+    uint256 public SPAWN_WHITELIST_SUPPLY = 500;
+    uint256 public COLLAB_WHITELIST_SUPPLY = 1000;
 
-    uint256 INITIAL_WHITELIST_PRICE = 500 * (10**18);
-    uint256 SPAWN_WHITELIST_PRICE = 0.2 ether;
-    uint256 COLLAB_WHITELIST_PRICE = 0.2 ether;
+    uint256 public INITIAL_WHITELIST_PRICE = 500 * (10**18);
+    uint256 public SPAWN_WHITELIST_PRICE = 0.2 ether;
+    uint256 public COLLAB_WHITELIST_PRICE = 0.2 ether;
 
-    uint256 SPAWN_WHITELIST_MAX_PER_WALLET = 5;
-    uint256 COLLAB_WHITELIST_MAX_PER_WALLET = 5;
+    uint256 public SPAWN_WHITELIST_MAX_PER_WALLET = 5;
+    uint256 public COLLAB_WHITELIST_MAX_PER_WALLET = 5;
 
     bytes32 public INITIAL_WH_MERKLE_ROOT = 0x0;
     bytes32 public SPAWN_WH_MERKLE_ROOT = 0x0;

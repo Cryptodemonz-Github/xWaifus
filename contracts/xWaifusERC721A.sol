@@ -14,17 +14,17 @@ import "erc721a/contracts/extensions/ERC721ABurnable.sol";
 contract xWaifusERC721A is ERC721A, ERC721ABurnable, Ownable {
     using Strings for uint256;
 
-    uint256 TOTAL_SUPPLY = 6666;
-    uint256 PRESALE_SUPPLY = 666;
+    uint256 public constant TOTAL_SUPPLY = 6666;
+    uint256 public constant PRESALE_SUPPLY = 666;
 
-    uint256 PUBLIC_SALE_PRICE = 0.2 ether;
-    uint256 PRESALE_PRICE = 0.1 ether;
+    uint256 public PUBLIC_SALE_PRICE = 0.2 ether;
+    uint256 public PRESALE_PRICE = 0.1 ether;
 
-    uint256 PRESALE_MAX_PER_WALLET = 1;
+    uint256 public PRESALE_MAX_PER_WALLET = 1;
 
-    bool MINTING_ALLOWED = false;
-    bool PUBLIC_MINTING_ALLOWED = false;
-    bool PRESALE_ALLOWED = false;
+    bool public MINTING_ALLOWED = false;
+    bool public PUBLIC_MINTING_ALLOWED = false;
+    bool public PRESALE_ALLOWED = false;
 
     string public BEGINNING_URI = "";
     string public ENDING_URI = "";
@@ -107,17 +107,14 @@ contract xWaifusERC721A is ERC721A, ERC721ABurnable, Ownable {
     }
 
     /**
-        @notice set uint2567 info
-        @param _mode 1 for total supply, 2 for presale supply
-        3 for public sale price, 4 for presale price and
-        5 for max number of tokens per wallet during presale
+        @notice set uint256 info
+        @param _mode 1 for public sale price, 2 for presale price and
+        3 for max number of tokens per wallet during presale
      */
     function setUint256(uint8 _mode, uint256 _value) public onlyOwner {
-        if (_mode == 1) TOTAL_SUPPLY = _value;
-        else if (_mode == 2) PRESALE_SUPPLY = _value;
-        else if (_mode == 3) PUBLIC_SALE_PRICE = _value * (10**18);
-        else if (_mode == 4) PRESALE_PRICE = _value * (10**18);
-        else if (_mode == 5) PRESALE_MAX_PER_WALLET = _value;
+        if (_mode == 1) PUBLIC_SALE_PRICE = _value * (10**18);
+        else if (_mode == 2) PRESALE_PRICE = _value * (10**18);
+        else if (_mode == 3) PRESALE_MAX_PER_WALLET = _value;
     }
 
     /**
