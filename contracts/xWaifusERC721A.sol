@@ -14,8 +14,12 @@ import "erc721a/contracts/extensions/ERC721ABurnable.sol";
 contract xWaifusERC721A is ERC721A, ERC721ABurnable, Ownable {
     using Strings for uint256;
 
-    uint256 public constant TOTAL_SUPPLY = 6666;
-    uint256 public constant PRESALE_SUPPLY = 666;
+    // for testing purposes
+    // real values are:
+    // total supply = 6666
+    // presale supply = 666
+    uint256 public constant TOTAL_SUPPLY = 10;
+    uint256 public constant PRESALE_SUPPLY = 5;
 
     uint256 public PUBLIC_SALE_PRICE = 0.2 ether;
     uint256 public PRESALE_PRICE = 0.1 ether;
