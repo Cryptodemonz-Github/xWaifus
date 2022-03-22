@@ -41,7 +41,7 @@ contract xWaifusERC721A is ERC721A, ERC721ABurnable, Ownable {
         if (_mode == 1) {
             require(
                 PUBLIC_MINTING_ALLOWED,
-                "Either minting or presale isn't allowed"
+                "Public sale is not allowed"
             );
             require(msg.value >= PUBLIC_SALE_PRICE, "Fee isn't paid");
             require(
@@ -57,7 +57,7 @@ contract xWaifusERC721A is ERC721A, ERC721ABurnable, Ownable {
             );
             require(
                 PRESALE_ALLOWED,
-                "Either minting or public sale isn't allowed"
+                "Presale is not allowed"
             );
             require(msg.value >= PRESALE_PRICE, "Fee isn't paid");
             require(
@@ -120,13 +120,18 @@ contract xWaifusERC721A is ERC721A, ERC721ABurnable, Ownable {
     /**
         @notice enable minting
         @param _mode 1 for if minting is allowed,
-        2 for if public minting is allowed, and 3 for
-        presale
+        2 for if public minting is allowed, 3 for
+        presale and 4 for all
         @param _value allowed or not allowed
      */
     function toggleAllowances(uint8 _mode, bool _value) public onlyOwner {
         if (_mode == 1) MINTING_ALLOWED = _value;
         else if (_mode == 2) PUBLIC_MINTING_ALLOWED = _value;
         else if (_mode == 3) PRESALE_ALLOWED = _value;
+        else if (_mode == 4) {
+            MINTING_ALLOWED = _value;
+            PUBLIC_MINTING_ALLOWED = _value;
+            PRESALE_ALLOWED = _value;
+        }
     }
 }

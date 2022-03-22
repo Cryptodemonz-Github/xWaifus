@@ -19,7 +19,7 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "./mocks/xLLTH.sol";
 import "./xWaifusERC721A.sol";
 
-abstract contract xWaifusWhitelist is xWaifusERC721A {
+contract xWaifusWhitelist is xWaifusERC721A {
     uint256 public SPAWN_WHITELIST_SUPPLY = 500;
     uint256 public COLLAB_WHITELIST_SUPPLY = 1000;
 
