@@ -47,7 +47,7 @@ contract xWaifusERC721A is ERC721A, ERC721ABurnable, Ownable {
                 PUBLIC_MINTING_ALLOWED,
                 "Public sale is not allowed"
             );
-            require(msg.value >= PUBLIC_SALE_PRICE, "Fee isn't paid");
+            require(msg.value >= PUBLIC_SALE_PRICE * _amount, "Fee isn't paid");
             require(
                 totalSupply() + _amount <= TOTAL_SUPPLY,
                 "Total supply exceeds max supply"
@@ -63,7 +63,7 @@ contract xWaifusERC721A is ERC721A, ERC721ABurnable, Ownable {
                 PRESALE_ALLOWED,
                 "Presale is not allowed"
             );
-            require(msg.value >= PRESALE_PRICE, "Fee isn't paid");
+            require(msg.value >= PRESALE_PRICE  * _amount, "Fee isn't paid");
             require(
                 totalSupply() + _amount <= PRESALE_SUPPLY,
                 "Total Supply exceeds max supply"
