@@ -41,7 +41,6 @@ contract xWaifusERC721A is ERC721A, ERC721ABurnable, Ownable {
         @param _amount amount of tokens to mint
      */
     function mint(uint8 _mode, uint256 _amount) public payable {
-        require(MINTING_ALLOWED, "Minting isn't allowed");
         if (_mode == 1) {
             require(
                 PUBLIC_MINTING_ALLOWED,
@@ -71,14 +70,6 @@ contract xWaifusERC721A is ERC721A, ERC721ABurnable, Ownable {
 
             _safeMint(msg.sender, _amount);
         }
-    }
-
-    /**
-        @notice proper way to burn tokens
-        @param _token_id token id to burn
-     */
-    function burnToken(uint256 _token_id) public {
-        burn(_token_id);
     }
 
     function tokenURI(uint256 tokenId)
@@ -123,17 +114,14 @@ contract xWaifusERC721A is ERC721A, ERC721ABurnable, Ownable {
 
     /**
         @notice enable minting
-        @param _mode 1 for if minting is allowed,
-        2 for if public minting is allowed, 3 for
-        presale and 4 for all
+        @param _mode 1 for if public minting is allowed, 2 for
+        presale and 3 for all
         @param _value allowed or not allowed
      */
     function toggleAllowances(uint8 _mode, bool _value) public onlyOwner {
-        if (_mode == 1) MINTING_ALLOWED = _value;
-        else if (_mode == 2) PUBLIC_MINTING_ALLOWED = _value;
-        else if (_mode == 3) PRESALE_ALLOWED = _value;
-        else if (_mode == 4) {
-            MINTING_ALLOWED = _value;
+        if (_mode == 1) PUBLIC_MINTING_ALLOWED = _value;
+        else if (_mode == 2) PRESALE_ALLOWED = _value;
+        else if (_mode == 3) {
             PUBLIC_MINTING_ALLOWED = _value;
             PRESALE_ALLOWED = _value;
         }
