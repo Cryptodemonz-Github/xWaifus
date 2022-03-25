@@ -49,7 +49,7 @@ contract xWaifusERC721A is ERC721A, ERC721ABurnable, Ownable {
             );
             require(msg.value >= PUBLIC_SALE_PRICE * _amount, "Fee isn't paid");
             require(
-                totalSupply() + _amount <= TOTAL_SUPPLY,
+                _totalMinted() + _amount <= TOTAL_SUPPLY,
                 "Total supply exceeds max supply"
             );
 
@@ -65,8 +65,8 @@ contract xWaifusERC721A is ERC721A, ERC721ABurnable, Ownable {
             );
             require(msg.value >= PRESALE_PRICE  * _amount, "Fee isn't paid");
             require(
-                totalSupply() + _amount <= PRESALE_SUPPLY,
-                "Total Supply exceeds max supply"
+                _totalMinted() + _amount <= PRESALE_SUPPLY,
+                "Total supply exceeds max supply"
             );
 
             _safeMint(msg.sender, _amount);

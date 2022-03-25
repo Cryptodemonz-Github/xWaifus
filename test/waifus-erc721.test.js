@@ -42,27 +42,71 @@ contract("xWaifus ERC721 Tests", async (accounts) => {
     });
 
     assert.equal(userbalance, 1, "User xWaifus balance must be 1");
+
+    await waifusInstance.setUint256(3, 6, { from: accounts[0] });
+
+    await truffleAssert.fails(
+      waifusInstance.mint(2, 2, { from: accounts[1], value: web3.utils.toWei("0.1", "ether") }),
+      truffleAssert.ErrorType.REVERT,
+      "Fee isn't paid"
+    );
   });
 
   it("Presale checks - v2", async () => {
+    await truffleAssert.fails(
+      waifusInstance.mint(2, 1, { from: accounts[1], value: web3.utils.toWei("0.2", "ether") }),
+      truffleAssert.ErrorType.REVERT,
+      "Minting isn't allowed"
+  );
+
     await waifusInstance.toggleAllowances(1, true, { from: accounts[0] });
     await waifusInstance.toggleAllowances(3, true, { from: accounts[0] });
 
     await truffleAssert.fails(
-        waifusInstance.mint(2, 2, { from: accounts[1], value: web3.utils.toWei("0.1", "ether") }),
-        truffleAssert.ErrorType.REVERT
+        waifusInstance.mint(2, 2, { from: accounts[1], value: web3.utils.toWei("0.2", "ether") }),
+        truffleAssert.ErrorType.REVERT,
+        "Too many waifus"
     );
 
     await truffleAssert.fails(
         waifusInstance.mint(2, 1, { from: accounts[1], value: web3.utils.toWei("0.01", "ether") }),
-        truffleAssert.ErrorType.REVERT
+        truffleAssert.ErrorType.REVERT,
+        "Fee isn't paid"
     );
 
     await waifusInstance.setUint256(3, 6, { from: accounts[0] });
 
     await truffleAssert.fails(
-        waifusInstance.mint(2, 6, { from: accounts[1], value: web3.utils.toWei("0.1", "ether") }),
-        truffleAssert.ErrorType.REVERT
-    )
+        waifusInstance.mint(2, 6, { from: accounts[1], value: web3.utils.toWei("0.6", "ether") }),
+        truffleAssert.ErrorType.REVERT,
+        "Total supply exceeds max supply"
+    );
+  });
+
+  it("Public sale checks - v1", async () => {
+    await waifusInstance.toggleAllowances(1, true, { from: accounts[0] });
+    await waifusInstance.toggleAllowances(2, true, { from: accounts[0] });
+
+    await waifusInstance.mint(1, 1, {
+      from: accounts[1],
+      value: web3.utils.toWei("0.2", "ether"),
+    });
+
+    await waifusInstance.mint(1, 3, {
+      from: accounts[1],
+      value: web3.utils.toWei("0.6", "ether"),
+    });
+
+    let userbalance;
+    await waifusInstance.balanceOf(accounts[1]).then((balance) => {
+      userbalance = balance;
+    });
+
+    assert.equal(userbalance, 4, "User xWaifus balance must be 4");
+
+    await truffleAssert.fails(
+      waifusInstance.mint(2, 3, { from: accounts[1], value: web3.utils.toWei("0.1", "ether") }),
+      truffleAssert.ErrorType.REVERT
+  );
   });
 });
